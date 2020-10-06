@@ -10,10 +10,10 @@ option(PSI_ANALYTICS_BUILD_EXAMPLE "Build PSI analytics example" ON)
 set(PSI_ANALYTICS_SOURCE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(PSI_ANALYTICS_BINARY_ROOT "${CMAKE_CURRENT_BINARY_DIR}")
 
-set(Boost_USE_STATIC_LIBS OFF CACHE BOOL "Use shared boost libraries" FORCE)
-set(Boost_USE_STATIC_RUNTIME OFF CACHE BOOL "Use shared boost runtime" FORCE)
+# set(Boost_USE_STATIC_LIBS OFF CACHE BOOL "Use shared boost libraries" FORCE)
+# set(Boost_USE_STATIC_RUNTIME OFF CACHE BOOL "Use shared boost runtime" FORCE)
 
-find_package(Boost COMPONENTS system filesystem REQUIRED)
+# find_package(Boost COMPONENTS system filesystem REQUIRED)
 find_package(Threads REQUIRED)
 
 set(ENABLE_RELIC ON CACHE BOOL "Build relic by default" FORCE)
@@ -81,6 +81,41 @@ elseif (NOT libOTe_FOUND AND NOT TARGET libOTe::libote)
 endif ()
 
 add_dependencies(libOTe relic_s)
+
+################################################
+
+#         Library/includes locations           #
+
+################################################
+
+include_directories("${CMAKE_SOURCE_DIR}")
+
+# default location for libOTe
+set(libOTe_Dirs "${CMAKE_SOURCE_DIR}/extern/libOTe/")
+include_directories("${libOTe_Dirs}/") 
+include_directories("${libOTe_Dirs}/cryptoTools") 
+
+# default location for miracl
+set(Miracl_Dirs "${libOTe_Dirs}/cryptoTools/thirdparty/linux/miracl/")
+include_directories("${Miracl_Dirs}") 
+
+# default location for NTL
+set(NTL_Dirs "${CMAKE_SOURCE_DIR}/thirdparty/linux/ntl/")
+#set(NTL_Dirs "/home/bush/Desktop/Avishay/NTL/ntl-10.5.0/")
+include_directories("${NTL_Dirs}/include/")
+
+# default location for GMP
+set(GMP_Dirs "${CMAKE_SOURCE_DIR}/thirdparty/linux/gmp/")
+include_directories("${GMP_Dirs}/include/")
+
+# default location for GF2X
+set(GF2X_Dirs "${CMAKE_SOURCE_DIR}/thirdparty/linux/gf2x/")
+include_directories("${GF2X_Dirs}/include/")
+
+# default location for Boost
+set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/linux/boost/")
+include_directories("${BOOST_ROOT}")
+
 
 add_subdirectory(psi_analytics_eurocrypt19)
 
